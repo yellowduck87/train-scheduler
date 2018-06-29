@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background: #556136;
+    font-family: 'Lato', sans-serif;
+}
+
+.card {
+    width: 100%;
+}
+
+.long {
+    width: 100%;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+#form-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 0;
+}
+
+.dark {
+    color: white;
+    background: #32383e;
+    border-bottom: solid 2px white;
+}
+
+.jumbotron {
+    color: white;
+    background: #32383e;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 10px;
+    border: solid 2px white;
+}
+
+.card {
+    border: solid 2px white;
+}
+
+.card-header{
+    font-size: 24px
+}
+
+th {
+    color: #9FB565;
+    font-size: 20px;
+}
+
+.left {
+    font-size: 16px;
+}
+
+.card-body {
+    background: #C1D998;
+}
