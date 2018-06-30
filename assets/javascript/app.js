@@ -12,30 +12,60 @@ $(document).ready(function () {
     firebase.initializeApp(config);
 
     var database = firebase.database();
-    var name = "CatTrain";
+    var name = "Furry";
     var dest = "KittyLand";
-    var arrive = "12:30";
-    var freq = "3:00";
+    var arrive = "Purr in the Morning";
+    var freq = "Right Meow";
 
-    database.ref().on("value", function (snapshot) {
-        // name = snapshot.val().name;
-        dest = snapshot.val().dest;
-        freq = snapshot.val().freq;
-        arrive = snapshot.val().arrive;
-        console.log(snapshot.val().dest);
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
+    var ref = database.ref('trains');
 
 
-    // function writesData(name, dest, freq, arrive) {
-    //     database.ref('Trains/' + name).set({
-    //         dest: dest,
-    //         freq: freq,
-    //         arrive: arrive,
-    //     })
-    // }
+    $(document).on("click", ".submit", function () {
 
-    // writesData();
+        ref.push({
+            name: ($("#name-input").val().trim()),
+            dest: ($("#dest-input").val().trim()),
+            arrive: ($("#arrive-input").val().trim()),
+            freq: $("#freq-input").val().trim(),
+        })
 
-})
+    })
+
+    database.ref().on("value", function(snapshot){
+        cycleThrough();
+    })
+
+    function cycleThrough() {
+        var cycle = database.ref("trains").orderByKey();
+        cycle.once("value")
+            .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var key = childSnapshot.key;
+                    var childData = childSnapshot.val();
+
+                    dest = childData.dest;
+                    arrive = childData.arrive;
+                    freq = childData.freq;
+                    name = childData.name;
+
+                    var newTr = $("<tr>");
+                    var newTh = $("<th class='left' scope='row'>");
+                    newTh.text(name);
+
+                    var destTd = $("<td>").text(dest);
+                    var arriveTd = $("<td>").text(arrive);
+                    var freqTd = $("<td>").text(freq);
+                    var minAway = $("<td>").text("30 minutes");
+                    //minAway will equal the next arrival time minus the current time, then displayed on screen
+
+                    newTr.append(newTh)
+                    newTr.append(destTd)
+                    newTr.append(arriveTd)
+                    newTr.append(freqTd);
+                    newTr.append(minAway);
+
+                    $(".table-body").append(newTr);
+                });
+            });
+    }
+});
